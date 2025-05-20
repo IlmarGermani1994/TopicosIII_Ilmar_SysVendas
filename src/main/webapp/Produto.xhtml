@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://java.sun.com/jsf/facelets">
+
+<h:head>
+    <title>Cadastro de Produtos</title>
+</h:head>
+
+<h:body>
+<ui:composition template="/template.xhtml">
+    <ui:define name="content">
+
+        <h1>Cadastro de Produtos</h1>
+
+        <h:form id="formProduto">
+            <p:messages autoUpdate="true"/>
+
+            <p:panel header="Produto">
+                <h:panelGrid columns="2" cellpadding="5">
+
+                    <p:outputLabel value="ID:"/>
+                    <p:inputText value="#{produtoController.objeto.id}" readonly="true"/>
+
+                    <p:outputLabel value="Código:"/>
+                    <p:inputText value="#{produtoController.objeto.codigo}" required="true"/>
+
+                    <p:outputLabel value="Nome:"/>
+                    <p:inputText value="#{produtoController.objeto.nome}" required="true"/>
+
+                    <p:outputLabel value="Valor Compra:"/>
+                    <p:inputNumber value="#{produtoController.objeto.valorCompra}" symbol="R$" decimalSeparator="," thousandSeparator="." required="true"/>
+
+                    <p:outputLabel value="Valor Venda:"/>
+                    <p:inputNumber value="#{produtoController.objeto.valorVenda}" symbol="R$" decimalSeparator="," thousandSeparator="." required="true"/>
+
+                    <p:outputLabel value="Unidade:"/>
+                    <p:selectOneMenu value="#{produtoController.objeto.unidadeObj}" converter="omnifaces.SelectItemsConverter">
+                        <f:selectItem itemLabel="Selecione" itemValue="#{null}" noSelectionOption="true"/>
+                        <f:selectItems value="#{produtoController.unidades}" var="u" itemValue="#{u}" itemLabel="#{u.sigla} - #{u.descricao}"/>
+                    </p:selectOneMenu>
+
+                    <p:outputLabel value="Categoria:"/>
+                    <p:selectOneMenu value="#{produtoController.objeto.categoria}" converter="omnifaces.SelectItemsConverter">
+                        <f:selectItem itemLabel="Selecione" itemValue="#{null}" noSelectionOption="true"/>
+                        <f:selectItems value="#{produtoController.categorias}" var="c" itemValue="#{c}" itemLabel="#{c.nome}"/>
+                    </p:selectOneMenu>
+
+                </h:panelGrid>
+
+                <p:commandButton value="Salvar" action="#{produtoController.salvar}" update="@form" icon="pi pi-save"/>
+                <p:commandButton value="Novo" action="#{produtoController.novo}" update="@form" icon="pi pi-plus"/>
+
+            </p:panel>
+
+            <p:dataTable value="#{produtoController.lista}" var="item" paginator="true" rows="10">
+                <p:column headerText="Código">
+                    <h:outputText value="#{item.codigo}" />
+                </p:column>
+                <p:column headerText="Nome">
+                    <h:outputText value="#{item.nome}" />
+                </p:column>
+                <p:column headerText="Valor Venda">
+                    <h:outputText value="#{item.valorVenda}" />
+                </p:column>
+                <p:column headerText="Categoria">
+                    <h:outputText value="#{item.categoria.nome}" />
+                </p:column>
+                <p:column headerText="Unidade">
+                    <h:outputText value="#{item.unidadeObj.sigla}" />
+                </p:column>
+                <p:column headerText="Ações">
+                    <p:commandButton icon="pi pi-pencil" action="#{produtoController.editar(item)}" update="@form"/>
+                    <p:commandButton icon="pi pi-trash" action="#{produtoController.remover(item)}" update="@form"
+                                     onclick="return confirm('Deseja realmente excluir este produto?');"/>
+                </p:column>
+            </p:dataTable>
+
+        </h:form>
+
+    </ui:define>
+</ui:composition>
+</h:body>
+</html>
