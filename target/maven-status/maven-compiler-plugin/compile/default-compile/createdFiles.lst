@@ -1,0 +1,8 @@
+br\upf\sysvendas\facade\AbstractFacade.class
+br\upf\sysvendas\controller\UsuariosController$PersistAction.class
+br\upf\sysvendas\JakartaRestConfiguration.class
+br\upf\sysvendas\entity\UsuariosEntity.class
+br\upf\sysvendas\facade\UsuariosFacade.class
+br\upf\sysvendas\controller\LoginController.class
+br\upf\sysvendas\controller\UsuariosController.class
+br\upf\sysvendas\resources\JakartaEE10Resource.class
